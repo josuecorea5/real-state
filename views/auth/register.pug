@@ -1,0 +1,50 @@
+extends ../layout/index
+
+block contain
+  .py-10 
+    h1.text-4xl.my-5.font-extrabold.text-center Bienes
+      span.font-normal Raices
+    h2.text-center.text-2xl= page
+
+    .mt-8.mx-auto.max-w-md 
+      .bg-white.py-8.px-4.shadow 
+        form.space-y-5(method="POST" action="/auth/register") 
+          input(type="hidden", name="_csrf" value= csrfToken)
+          div 
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="name") Nombre 
+            input#name.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Nombre" type="text" name="name" value= user ? user.name : '') 
+            if errors    
+              each e in errors 
+                if e.name == "name"
+                  p.text-red-600=e.msg
+              
+          div 
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="email") Email 
+            input#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Email" type="email" name="email" value= user ? user.email : '') 
+            if errors 
+              each e in errors 
+                if e.name == "email"
+                  p.text-red-600=e.msg
+          div 
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="password") Password 
+            input#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Password" type="password" name="password") 
+            if errors 
+              each e in errors 
+                if e.name == "password"
+                  p.text-red-600=e.msg
+          div 
+            label.block.text-sm.uppercase.text-gray-500.mb-3.font-bold(for="repite_password") Repetir password 
+            input#repite_password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400(placeholder="Repite tu password" type="password" name="repite_password") 
+            if errors 
+              each e in errors 
+                if e.name == "repite_password"
+                  p.text-red-600=e.msg
+            
+            if message 
+              p.text-red-700.text-lg.mt-2.text-center= message[0].msg
+
+          div.flex.items-center.justify-between 
+            a.text-gray-500.text-xs(href="/auth/login") ¿Ya tienes una cuenta? Inicia Sesión 
+            a.text-gray-500.text-xs(href="/auth/forgotPassword") Olvidé mi contraseña
+
+          input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 cursor-pointer" type="submit" value="Crear Cuenta")
